@@ -1,0 +1,64 @@
+<!-- Star Rating Script -->
+<script type="application/javascript">
+    /* STAR RATING SCRIPT */
+    window.addEventListener('DOMContentLoaded', function () {
+        const sectionLabels = document.querySelectorAll('.label.preField');
+
+        sectionLabels.forEach((sectionLabel) => {
+            if (sectionLabel.innerHTML.startsWith('{$STAR RATING}')) {
+                sectionLabel.innerHTML = sectionLabel.innerHTML.substring(14);
+                starRatingSection = sectionLabel.parentElement;
+                starRatingSection.classList.add('starratingsection');
+                let radioLabels = starRatingSection.querySelectorAll('.choices.horizontal .oneChoice .label.postField');
+                radioLabels.forEach((radioLabel, index) => {
+                    radioLabel.innerHTML = `&#9733`;
+                    radioLabel.parentElement.classList.add('starrating');
+                    radioLabel.addEventListener('click', () => {
+                        updateStarColor(radioLabels, index);
+                        radioLabel.classList.add('full');
+                    });
+                });
+            }
+        });
+
+        function updateStarColor(radioLabels, idx) {
+            radioLabels.forEach((radioLabel, index) => {
+                if (index <= idx) {
+                    radioLabel.classList.remove('full');
+                } else {
+                    radioLabel.classList.add('full');
+                }
+            });
+        }
+    });
+</script>
+
+<!-- Star Rating Style -->
+<style type="text/css">
+    .starratingsection .inputWrapper .choices.horizontal {
+        display: flex !important;
+        flex-direction: row-reverse !important;
+    }
+
+    .inputWrapper .starrating label {
+        font-size: 2rem;
+        cursor: pointer;
+    }
+
+    .inputWrapper .starrating input[type="radio"] {
+        display: none !important;
+    }
+
+    .inputWrapper .starrating input[type="radio"].hide {
+        display: inline-flex;
+    }
+
+    label.label.postField.full {
+        color: orange !important;
+    }
+
+    .wFormContainer .starrating label.label.postField:hover,
+    .wForm span.starrating:hover~span.starrating label.postField {
+        color: orange !important;
+    }
+</style>
